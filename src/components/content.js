@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 const Content = () => {
     const [todo, setTodo] = useState('');
-    const [todoList, setTodoList] = useState([]);
-    const [status, setStatus] = useState('');
+    const [todoList, setTodoList] = useState(() => {
+        // Load initial state from localStorage
+        const savedTodos = localStorage.getItem('todoList');
+        return savedTodos ? JSON.parse(savedTodos) : [];
+    });
+    const [status, setStatus] = useState('all');
     let currentIndex = 1;
 
     const handleChangeInput = (value) => {
@@ -11,7 +15,9 @@ const Content = () => {
     };
 
     const handleAddToTodolist = () => {
-        setTodoList([...todoList, { id: Date.now(), todo: todo, status: 'todo' }]);
+        const newTodo = { id: Date.now(), todo: todo, status: 'todo' };
+        const updatedTodoList = [...todoList, newTodo];
+        setTodoList(updatedTodoList);
         setTodo('');
     };
 
@@ -40,15 +46,19 @@ const Content = () => {
         setStatus(e.target.value);
     };
 
+    // Save todoList to localStorage whenever it changes
     useEffect(() => {
-        setStatus('all');
-    }, []);
+        if (todoList.length > 0) {
+            localStorage.setItem('todoList', JSON.stringify(todoList));
+        }
+    }, [todoList]);
 
     return (
         <>
             <div className='addTask' style={{ textAlign: 'center' }}>
                 <div>
-                    <input className = 'inputField'
+                    <input
+                        className='inputField'
                         type='text'
                         value={todo}
                         onChange={(e) => handleChangeInput(e.target.value)}
@@ -95,7 +105,7 @@ const Content = () => {
                                             display: 'flex',
                                             justifyContent: 'space-between',
                                             margin: '1px 0px 0px 0px',
-                                            paddingLeft:"20px",
+                                            paddingLeft: "20px",
                                             paddingRight: "20px",
                                             cursor: "pointer",
                                             borderBottom: "1px solid #9CA3AF"
