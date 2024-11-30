@@ -1,0 +1,39 @@
+.intro p {
+  text-align: center;
+}
+
+.listTask {
+  min-height: 500px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #FEF3C7;
+  color: #B45309;
+}
+
+.headerList {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px 10px;
+  align-items: center;
+}
+
+.listContent {
+  display: flex;
+  flex-direction: column;
+  font-size: 19px;
+  justify-content: flex-start;
+}
+
+.selectBtn {
+  border-radius: 5px;
+  margin-right: 10%;
+  padding: 5px;
+  border: 1px solid red;
+}
+
+.inputField {
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px;
+  width: 200px;
+}
